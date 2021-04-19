@@ -6,7 +6,7 @@ config :conduit, Conduit.Repo,
   password: "123456",
   database: "conduit_readstore_prod",
   hostname: "localhost",
-  pool_size: 10
+  pool_size: 15
 
 # For production, don't forget to configure the url host
 # to something meaningful, Phoenix uses this information
