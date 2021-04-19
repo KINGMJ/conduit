@@ -1,4 +1,4 @@
-defmodule Condut.Factory do
+defmodule Conduit.Factory do
   use ExMachina
 
   def user_factory do
