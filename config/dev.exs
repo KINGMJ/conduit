@@ -1,12 +1,11 @@
 use Mix.Config
 
-# Configure your database
+# Configure the read store database
 config :conduit, Conduit.Repo,
   username: "postgres",
-  password: "postgres",
-  database: "conduit_dev",
+  password: "123456",
+  database: "conduit_readstore_dev",
   hostname: "localhost",
-  show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
 # For development, we disable any cache and enable
