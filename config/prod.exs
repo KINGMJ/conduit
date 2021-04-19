@@ -1,5 +1,13 @@
 use Mix.Config
 
+# Configure the read store database
+config :conduit, Conduit.Repo,
+  username: "postgres",
+  password: "123456",
+  database: "conduit_readstore_prod",
+  hostname: "localhost",
+  pool_size: 10
+
 # For production, don't forget to configure the url host
 # to something meaningful, Phoenix uses this information
 # when generating URLs.
@@ -49,6 +57,15 @@ config :logger, level: :info
 #       force_ssl: [hsts: true]
 #
 # Check `Plug.SSL` for all available options in `force_ssl`.
+
+# Configure the event store database
+config :conduit, Conduit.EventStore,
+  serializer: Commanded.Serialization.JsonSerializer,
+  username: "postgres",
+  password: "123456",
+  database: "conduit_eventstore_prod",
+  hostname: "localhost",
+  pool_size: 10
 
 # Finally import the config/prod.secret.exs which loads secrets
 # and configuration from environment variables.

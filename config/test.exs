@@ -1,7 +1,13 @@
 use Mix.Config
 
-# Configure your database
-#
+# Configure the read store database
+config :conduit, Conduit.Repo,
+  username: "postgres",
+  password: "123456",
+  database: "conduit_readstore_test",
+  hostname: "localhost",
+  pool_size: 10
+
 # The MIX_TEST_PARTITION environment variable can be used
 # to provide built-in test partitioning in CI environment.
 # Run `mix help test` for more information.
@@ -20,3 +26,12 @@ config :conduit, ConduitWeb.Endpoint,
 
 # Print only warnings and errors during test
 config :logger, level: :warn
+
+# Configure the event store database
+config :conduit, Conduit.EventStore,
+  serializer: Commanded.Serialization.JsonSerializer,
+  username: "postgres",
+  password: "123456",
+  database: "conduit_eventstore_test",
+  hostname: "localhost",
+  pool_size: 10
