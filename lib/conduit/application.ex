@@ -9,6 +9,8 @@ defmodule Conduit.Application do
     children = [
       # Start the Ecto repository
       Conduit.Repo,
+      # Start the Commanded App
+      Conduit.CommandedApp,
       # Start the Telemetry supervisor
       ConduitWeb.Telemetry,
       # Start the PubSub system

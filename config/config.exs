@@ -8,7 +8,8 @@
 use Mix.Config
 
 config :conduit,
-  ecto_repos: [Conduit.Repo]
+  ecto_repos: [Conduit.Repo],
+  event_stores: [Conduit.EventStore]
 
 # Configures the endpoint
 config :conduit, ConduitWeb.Endpoint,
