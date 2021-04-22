@@ -1,6 +1,7 @@
 defmodule Conduit.Accounts.User do
   use Ecto.Schema
-  import Ecto.Changeset
+
+  @primary_key {:uuid, :binary_id, autogenerate: false}
 
   schema "accounts_users" do
     field :bio, :string
@@ -10,12 +11,5 @@ defmodule Conduit.Accounts.User do
     field :username, :string
 
     timestamps()
-  end
-
-  @doc false
-  def changeset(user, attrs) do
-    user
-    |> cast(attrs, [:username, :email, :hashed_password, :bio, :image])
-    |> validate_required([:username, :email, :hashed_password, :bio, :image])
   end
 end
