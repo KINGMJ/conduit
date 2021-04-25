@@ -2,7 +2,7 @@ defmodule Conduit.Accounts.Supervisor do
   use Supervisor
 
   def start_link(init_arg \\ []) do
-    Supervisor.start_link(__MODULE, init_arg, name: __MODULE)
+    Supervisor.start_link(__MODULE__, init_arg, name: __MODULE__)
   end
 
   def init(_arg) do
