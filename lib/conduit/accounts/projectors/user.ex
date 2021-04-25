@@ -9,13 +9,18 @@ defmodule Conduit.Accounts.Projectors.User do
   alias Conduit.Accounts.User
 
   project(%UserRegistered{} = registered, fn multi ->
-    Ecto.Multi.insert(multi, :user, %User{
-      uuid: registered.user_uuid,
-      username: registered.username,
-      email: registered.email,
-      hashed_password: registered.hashed_password,
-      bio: nil,
-      image: nil
-    })
+    Ecto.Multi.insert(
+      multi,
+      :user,
+      %{
+        uuid: registered.user_uuid,
+        username: registered.username,
+        email: registered.email,
+        hashed_password: registered.hashed_password,
+        bio: nil,
+        image: nil
+      }
+      |> User.new_changeset()
+    )
   end)
 end
