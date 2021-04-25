@@ -24,46 +24,32 @@ defmodule Conduit.DataCase do
       import Ecto.Changeset
       import Ecto.Query
       import Conduit.DataCase
-      import Conduit.Factory
     end
   end
 
-  setup _tags do
-    Application.stop(:conduit)
-    Application.stop(:command)
-    Application.stop(:eventstore)
+  setup tags do
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Conduit.Repo)
 
-    reset_eventstore()
-    reset_readstore()
-
-    Application.ensure_all_started(:conduit)
+    unless tags[:async] do
+      Ecto.Adapters.SQL.Sandbox.mode(Conduit.Repo, {:shared, self()})
+    end
 
     :ok
   end
 
-  defp reset_eventstore do
-    {:ok, conn} =
-      EventStore.configuration()
-      |> EventStore.Config.parse()
-      |> Postgrex.start_link()
+  @doc """
+  A helper that transforms changeset errors into a map of messages.
 
-    EventStore.Storage.Initializer.reset!(conn)
-  end
+      assert {:error, changeset} = Accounts.create_user(%{password: "short"})
+      assert "password is too short" in errors_on(changeset).password
+      assert %{password: ["password is too short"]} = errors_on(changeset)
 
-  defp reset_readstore do
-    readstore_config = Application.get_env(:conduit, Conduit.Repo)
-
-    {:ok, conn} = Postgrex.start_link(readstore_config)
-
-    Postgrex.query!(conn, truncate_readstore_tables(), [])
-  end
-
-  defp truncate_readstore_tables do
-    """
-    TRUNCATE TABLE
-      accounts_users,
-      projection_versions
-    RESTART IDENTITY;
-    """
+  """
+  def errors_on(changeset) do
+    Ecto.Changeset.traverse_errors(changeset, fn {message, opts} ->
+      Regex.replace(~r"%{(\w+)}", message, fn _, key ->
+        opts |> Keyword.get(String.to_existing_atom(key), key) |> to_string()
+      end)
+    end)
   end
 end
