@@ -6,7 +6,7 @@ defmodule Conduit.Accounts do
   alias Conduit.Accounts.Commands.RegisterUser
   alias Conduit.Accounts.User
   alias Conduit.Repo
-  alias Conduit.Router
+  alias Conduit.CommandedApp
 
   @doc """
   Register a new user.
@@ -19,7 +19,7 @@ defmodule Conduit.Accounts do
       |> assign(:user_uuid, uuid)
       |> RegisterUser.new()
 
-    with :ok <- Router.dispatch(register_user, consistency: :strong) do
+    with :ok <- CommandedApp.dispatch(register_user, consistency: :strong) do
       get(User, uuid)
     else
       reply -> reply
