@@ -6,7 +6,7 @@ defmodule Conduit.Accounts.Projectors.User do
     consistency: :strong
 
   alias Conduit.Accounts.Events.UserRegistered
-  alias Conduit.Accounts.Projectors.User
+  alias Conduit.Accounts.User
 
   project(%UserRegistered{} = registered, fn multi ->
     Ecto.Multi.insert(multi, :user, %User{
