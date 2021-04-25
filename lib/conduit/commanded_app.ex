@@ -5,4 +5,6 @@ defmodule Conduit.CommandedApp do
       adapter: Commanded.EventStore.Adapters.EventStore,
       event_store: Conduit.EventStore
     ]
+
+  router(Conduit.Router)
 end
