@@ -4,7 +4,7 @@ defmodule Conduit.Accounts do
   """
 
   alias Conduit.Accounts.Commands.RegisterUser
-  alias Conduit.Accounts.User
+  alias Conduit.Accounts.Projections.User
   alias Conduit.Repo
   alias Conduit.CommandedApp
 

@@ -2,7 +2,7 @@ defmodule Conduit.AccountsTest do
   use Conduit.DataCase
 
   alias Conduit.Accounts
-  alias Conduit.Accounts.User
+  alias Conduit.Accounts.Projections.User
 
   describe "register user" do
     @tag :integration
