@@ -64,7 +64,14 @@ defmodule Conduit.MixProject do
       setup: ["deps.get", "ecto.setup", "cmd npm install --prefix assets"],
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
-      test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"]
+      test: [
+        "ecto.create --quiet",
+        "ecto.migrate --quiet",
+        "event_store.create --quiet",
+        "event_store.init --quiet",
+        "event_store.migrate --quiet",
+        "test"
+      ]
     ]
   end
 end
