@@ -4,6 +4,7 @@ defmodule Conduit.Accounts do
   """
 
   alias Conduit.Accounts.Commands.RegisterUser
+  alias Conduit.Accounts.Queries.UserByUsername
   alias Conduit.Accounts.Projections.User
   alias Conduit.Repo
   alias Conduit.CommandedApp
@@ -30,6 +31,13 @@ defmodule Conduit.Accounts do
         reply -> reply
       end
     end
+  end
+
+  def user_by_username(username) do
+    username
+    |> String.downcase()
+    |> UserByUsername.new()
+    |> Repo.one()
   end
 
   defp get(schema, uuid) do
