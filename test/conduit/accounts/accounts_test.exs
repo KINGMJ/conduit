@@ -21,5 +21,13 @@ defmodule Conduit.AccountsTest do
       assert {:error, errors} = Accounts.register_user(build(:user, username: ""))
       assert errors == [username: {"can't be blank", [validation: :required]}]
     end
+
+    @tag :integration
+    test "should fail when username already taken and return error" do
+      assert {:ok, %User{} = user} = Accounts.register_user(build(:user))
+      assert {:error, errors} = Accounts.register_user(build(:user))
+
+      assert errors == [username: {"has already been taken"}]
+    end
   end
 end
