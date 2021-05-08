@@ -19,10 +19,18 @@ defmodule Conduit.Accounts do
       |> assign(:user_uuid, uuid)
       |> RegisterUser.new()
 
-    with :ok <- CommandedApp.dispatch(register_user, consistency: :strong) do
-      get(User, uuid)
+    IO.inspect(register_user)
+    IO.inspect(register_user.valid?)
+
+    unless register_user.valid? do
+      {:error, register_user.errors}
     else
-      reply -> reply
+      cmd = Ecto.Changeset.apply_changes(register_user)
+      with :ok <- CommandedApp.dispatch(cmd, consistency: :strong) do
+        get(User, uuid)
+      else
+        reply -> reply
+      end
     end
   end
 
