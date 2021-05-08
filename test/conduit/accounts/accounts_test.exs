@@ -19,7 +19,7 @@ defmodule Conduit.AccountsTest do
     @tag :integration
     test "should fail with invalid data and return error" do
       assert {:error, errors} = Accounts.register_user(build(:user, username: ""))
-      assert errors = [username: {"can't be blank", [validation: :required]}]
+      assert errors == [username: {"can't be blank", [validation: :required]}]
     end
   end
 end
