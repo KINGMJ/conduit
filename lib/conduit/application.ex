@@ -18,9 +18,10 @@ defmodule Conduit.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: Conduit.PubSub},
       # Start the Endpoint (http/https)
-      ConduitWeb.Endpoint
+      ConduitWeb.Endpoint,
       # Start a worker by calling: Conduit.Worker.start_link(arg)
       # {Conduit.Worker, arg}
+      Conduit.Support.Unique
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
