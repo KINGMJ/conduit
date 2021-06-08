@@ -21,7 +21,7 @@ defmodule Conduit.Accounts do
       |> RegisterUser.new()
 
     unless register_user.valid? do
-      {:error, register_user.errors}
+      {:error, register_user}
     else
       cmd = Ecto.Changeset.apply_changes(register_user)
 
