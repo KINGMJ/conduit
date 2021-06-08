@@ -13,6 +13,7 @@ defmodule Conduit.Accounts.Commands.RegisterUser do
       :email,
       :hashed_password
     ])
+    |> validate_format(:username, ~r/^[a-z0-9]+$/, message: "is invalid")
   end
 
   # defstruct [
