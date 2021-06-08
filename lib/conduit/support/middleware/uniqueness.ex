@@ -49,11 +49,9 @@ defmodule Conduit.Support.Middleware.Uniqueness do
 
       case Unique.claim(unique_field, value) do
         :ok ->
-          IO.inspect("success")
           {:cont, :ok}
 
         {:error, :already_taken} ->
-          IO.inspect("error")
           {:halt, {:error, Keyword.new([{unique_field, error_message}])}}
       end
     end)
