@@ -1,7 +1,7 @@
 defmodule Conduit.AccountsTest do
   use Conduit.DataCase
 
-  alias Conduit.Accounts
+  alias Conduit.{Accounts, Auth}
   alias Conduit.Accounts.Projections.User
 
   describe "register user" do
@@ -11,7 +11,6 @@ defmodule Conduit.AccountsTest do
 
       assert user.email == "jake@jake.jake"
       assert user.username == "jake"
-      assert user.hashed_password == "jakejake"
       assert user.bio == nil
       assert user.image == nil
     end
@@ -78,6 +77,12 @@ defmodule Conduit.AccountsTest do
         Task.async(fn -> Accounts.register_user(build(:user, username: "user#{x}")) end)
       end)
       |> Enum.map(&Task.await/1)
+    end
+
+    @tag :integration
+    test "should hash password" do
+      assert {:ok, %User{} = user} = Accounts.register_user(build(:user))
+      assert Auth.validate_password("jakejake", user.hashed_password)
     end
   end
 end

@@ -1,4 +1,6 @@
 defmodule Conduit.Accounts.Commands.RegisterUser do
+  alias Conduit.Auth
+
   use Commanded.Command,
     user_uuid: :binary_id,
     username: :string,
@@ -34,6 +36,15 @@ defmodule Conduit.Accounts.Commands.RegisterUser do
   """
   def downcase_email(%{email: email} = attrs) do
     %{attrs | email: String.downcase(email)}
+  end
+
+  @doc """
+  把参数中的password转换成hashed_password，并删除password属性
+  """
+  def hash_password(%{password: password} = attrs) do
+    attrs
+    |> Map.put(:hashed_password, Auth.hash_password(password))
+    |> Map.delete(:password)
   end
 
   # defstruct [

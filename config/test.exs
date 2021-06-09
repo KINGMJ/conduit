@@ -25,3 +25,6 @@ config :conduit, Conduit.EventStore,
   database: "conduit_eventstore_test",
   hostname: "localhost",
   pool_size: 10
+
+# Configure the Bcrypt
+config :bcrypt_elixir, log_rounds: 4
