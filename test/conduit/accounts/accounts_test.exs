@@ -43,5 +43,11 @@ defmodule Conduit.AccountsTest do
       # assert %{username: ["is invalid"]} == errors_on(errors)
       assert "is invalid" in errors_on(errors).username
     end
+
+    @tag :integration
+    test "should convert username to lowercase" do
+      assert {:ok, %User{} = user} = Accounts.register_user(build(:user, username: "JAKE"))
+      assert user.username == "jake"
+    end
   end
 end
