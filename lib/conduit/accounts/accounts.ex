@@ -17,7 +17,8 @@ defmodule Conduit.Accounts do
 
     register_user =
       attrs
-      |> assign(:user_uuid, uuid)
+      |> RegisterUser.assign_uuid(uuid)
+      |> RegisterUser.downcase_username()
       |> RegisterUser.new()
 
     unless register_user.valid? do
@@ -49,5 +50,5 @@ defmodule Conduit.Accounts do
 
   # # generate a unique identity
   # defp assign_uuid(attrs, identity), do: Map.put(attrs, identity, UUID.uuid4())
-  defp assign(attrs, key, value), do: Map.put(attrs, key, value)
+  # defp assign(attrs, key, value), do: Map.put(attrs, key, value)
 end

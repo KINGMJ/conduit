@@ -16,6 +16,18 @@ defmodule Conduit.Accounts.Commands.RegisterUser do
     |> validate_format(:username, ~r/^[a-z0-9]+$/, message: "is invalid")
   end
 
+  @doc """
+  Assign a unique identity for the user
+  """
+  def assign_uuid(attrs, uuid), do: Map.put(attrs, :user_uuid, uuid)
+
+  @doc """
+  Convert username to lowercase characters
+  """
+  def downcase_username(%{username: username} = attrs) do
+    %{attrs | username: String.downcase(username)}
+  end
+
   # defstruct [
   #   :user_uuid,
   #   :username,
