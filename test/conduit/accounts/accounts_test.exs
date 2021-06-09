@@ -61,5 +61,12 @@ defmodule Conduit.AccountsTest do
       assert {:ok, %User{} = user} = Accounts.register_user(build(:user, email: "JAKE@JAKE.JAKE"))
       assert user.email == "jake@jake.jake"
     end
+
+    @tag :integration
+    test "should fail when email address already taken and return error" do
+      assert {:ok, %User{}} = Accounts.register_user(build(:user, username: "jake"))
+      assert {:error, errors} = Accounts.register_user(build(:user, username: "jake2"))
+      assert errors == [email: {"has already been taken"}]
+    end
   end
 end

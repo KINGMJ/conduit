@@ -4,7 +4,7 @@ defmodule Conduit.Accounts do
   """
 
   alias Conduit.Accounts.Commands.RegisterUser
-  alias Conduit.Accounts.Queries.UserByUsername
+  alias Conduit.Accounts.Queries.{UserByUsername, UserByEmail}
   alias Conduit.Accounts.Projections.User
   alias Conduit.Repo
   alias Conduit.CommandedApp
@@ -35,10 +35,23 @@ defmodule Conduit.Accounts do
     end
   end
 
+  @doc """
+  Get an existing user by there nickname, or return `nil` if not registered
+  """
   def user_by_username(username) do
     username
     |> String.downcase()
     |> UserByUsername.new()
+    |> Repo.one()
+  end
+
+  @doc """
+  Get an existing user by there email address, or return `nil` if not registered
+  """
+  def user_by_email(email) when is_binary(email) do
+    email
+    |> String.downcase()
+    |> UserByEmail.new()
     |> Repo.one()
   end
 
