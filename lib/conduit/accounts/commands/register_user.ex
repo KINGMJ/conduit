@@ -14,6 +14,7 @@ defmodule Conduit.Accounts.Commands.RegisterUser do
       :hashed_password
     ])
     |> validate_format(:username, ~r/^[a-z0-9]+$/, message: "is invalid")
+    |> validate_format(:email, ~r/\S+@\S+\.\S+/, message: "is invalid")
   end
 
   @doc """
