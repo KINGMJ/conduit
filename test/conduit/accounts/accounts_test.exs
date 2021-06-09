@@ -33,7 +33,9 @@ defmodule Conduit.AccountsTest do
     @tag :integration
     test "should fail when registering identical username at same time and return error" do
       1..2
-      |> Enum.map(fn _ -> Task.async(fn -> Accounts.register_user(build(:user)) end) end)
+      |> Enum.map(fn x ->
+        Task.async(fn -> Accounts.register_user(build(:user, email: "jake#{x}@jake.jake")) end)
+      end)
       |> Enum.map(&Task.await/1)
     end
 
