@@ -22,6 +22,7 @@ defmodule Conduit.Support.Middleware.Uniqueness do
   defimpl UniqueFields, for: RegisterUser do
     def unique(_command),
       do: [
+        {:email, {"has already been taken"}},
         {:username, {"has already been taken"}}
       ]
   end
