@@ -19,6 +19,7 @@ defmodule Conduit.Accounts do
       attrs
       |> RegisterUser.assign_uuid(uuid)
       |> RegisterUser.downcase_username()
+      |> RegisterUser.downcase_email()
       |> RegisterUser.new()
 
     unless register_user.valid? do

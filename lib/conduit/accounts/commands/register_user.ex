@@ -29,6 +29,13 @@ defmodule Conduit.Accounts.Commands.RegisterUser do
     %{attrs | username: String.downcase(username)}
   end
 
+  @doc """
+  Convert email address to lowercase characters
+  """
+  def downcase_email(%{email: email} = attrs) do
+    %{attrs | email: String.downcase(email)}
+  end
+
   # defstruct [
   #   :user_uuid,
   #   :username,

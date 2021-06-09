@@ -55,5 +55,11 @@ defmodule Conduit.AccountsTest do
       assert {:error, errors} = Accounts.register_user(build(:user, email: "invalidemail"))
       assert "is invalid" in errors_on(errors).email
     end
+
+    @tag :integration
+    test "should convert email address to lowercase" do
+      assert {:ok, %User{} = user} = Accounts.register_user(build(:user, email: "JAKE@JAKE.JAKE"))
+      assert user.email == "jake@jake.jake"
+    end
   end
 end
