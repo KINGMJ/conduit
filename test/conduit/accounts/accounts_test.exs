@@ -26,7 +26,8 @@ defmodule Conduit.AccountsTest do
     test "should fail when username already taken and return error" do
       assert {:ok, %User{} = _user} = Accounts.register_user(build(:user))
       assert {:error, errors} = Accounts.register_user(build(:user, email: "jake2@jake.jake"))
-      assert errors == [username: {"has already been taken"}]
+      # assert errors == [username: {"has already been taken"}]
+      assert errors == %{username: ["has already been taken"]}
     end
 
     @tag :integration
@@ -54,6 +55,7 @@ defmodule Conduit.AccountsTest do
     @tag :integration
     test "should fail when email address format is invalid and return error" do
       assert {:error, errors} = Accounts.register_user(build(:user, email: "invalidemail"))
+      IO.inspect(errors_on(errors))
       assert "is invalid" in errors_on(errors).email
     end
 
@@ -67,7 +69,7 @@ defmodule Conduit.AccountsTest do
     test "should fail when email address already taken and return error" do
       assert {:ok, %User{}} = Accounts.register_user(build(:user, username: "jake"))
       assert {:error, errors} = Accounts.register_user(build(:user, username: "jake2"))
-      assert errors == [email: {"has already been taken"}]
+      assert errors == %{email: ["has already been taken"]}
     end
 
     @tag :integration
