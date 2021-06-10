@@ -1,11 +1,10 @@
 defmodule ConduitWeb.UserControllerTest do
   use ConduitWeb.ConnCase
 
-  import Conduit.Factory
   alias Conduit.Accounts
 
   def fixture(:user, attrs \\ []) do
-    build(:user, attrs) |> Accounts.create_user()
+    build(:user, attrs) |> Accounts.register_user()
   end
 
   setup %{conn: conn} do
@@ -20,7 +19,7 @@ defmodule ConduitWeb.UserControllerTest do
 
       assert json == %{
                "bio" => nil,
-               "email" => "jack@jack.jake",
+               "email" => "jake@jake.jake",
                "image" => nil,
                "username" => "jake"
              }
@@ -32,7 +31,7 @@ defmodule ConduitWeb.UserControllerTest do
 
       assert json_response(conn, 422)["errors"] == %{
                "username" => [
-                 "can't be empty"
+                 "can't be blank"
                ]
              }
     end

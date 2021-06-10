@@ -14,6 +14,16 @@ defmodule ConduitWeb.FallbackController do
     |> render("error.json", changeset: changeset)
   end
 
+  # 自定义错误返回
+  def call(conn, {:error, errors}) do
+    IO.inspect(errors)
+
+    conn
+    |> put_status(:unprocessable_entity)
+    |> put_view(ConduitWeb.ValidationView)
+    |> render("error.json", errors: errors)
+  end
+
   # This clause is an example of how to handle resources that cannot be found.
   def call(conn, {:error, :not_found}) do
     conn

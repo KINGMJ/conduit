@@ -7,6 +7,9 @@ defmodule ConduitWeb.UserController do
   action_fallback ConduitWeb.FallbackController
 
   def create(conn, %{"user" => user_params}) do
+    # 将字符串参数转换为atom
+    user_params = Map.new(user_params, fn {k, v} -> {String.to_atom(k), v} end)
+
     with {:ok, %User{} = user} <- Accounts.register_user(user_params) do
       conn
       |> put_status(:created)
