@@ -22,8 +22,8 @@ defmodule Conduit.Support.Middleware.Uniqueness do
   defimpl UniqueFields, for: RegisterUser do
     def unique(_command),
       do: [
-        {:email, {"has already been taken"}},
-        {:username, {"has already been taken"}}
+        {:email, "has already been taken"},
+        {:username, "has already been taken"}
       ]
   end
 
@@ -53,7 +53,7 @@ defmodule Conduit.Support.Middleware.Uniqueness do
           {:cont, :ok}
 
         {:error, :already_taken} ->
-          {:halt, {:error, Keyword.new([{unique_field, error_message}])}}
+          {:halt, {:error, Map.new([{unique_field, [error_message]}])}}
       end
     end)
   end
