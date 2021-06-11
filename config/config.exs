@@ -27,6 +27,10 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
+config :conduit, Conduit.Auth.GuardianSerializer,
+  issuer: "conduit",
+  secret_key: "WmdGyq0k6pxoEbZiknSKHIiHVm4EDHjRO5aGCOTRbf7nr7b6AgUJa697TxFdtqcn"
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"
