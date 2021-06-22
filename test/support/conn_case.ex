@@ -40,6 +40,12 @@ defmodule ConduitWeb.ConnCase do
   end
 
   setup tags do
+    Application.stop(:conduit)
+    Application.stop(:commanded)
+    Application.stop(:eventstore)
+
+    Application.ensure_all_started(:conduit)
+
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(Conduit.Repo)
 
     unless tags[:async] do
