@@ -16,8 +16,6 @@ defmodule ConduitWeb.FallbackController do
 
   # 自定义错误返回
   def call(conn, {:error, errors}) do
-    IO.inspect(errors)
-
     conn
     |> put_status(:unprocessable_entity)
     |> put_view(ConduitWeb.ValidationView)
