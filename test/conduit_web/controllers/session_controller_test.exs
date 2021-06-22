@@ -24,6 +24,24 @@ defmodule ConduitWeb.SessionControllerTest do
                "username" => "jake"
              }
     end
+
+    @tag :web
+    test "does not create session and renders error when password does not match", %{conn: conn} do
+      register_user()
+
+      conn =
+        post conn, Routes.session_path(conn, :create),
+          user: %{
+            email: "jake@jake.jake",
+            password: "invalidpassword"
+          }
+
+      assert json_response(conn, 422)["errors"] == %{
+               "email or password" => [
+                 "is invalid"
+               ]
+             }
+    end
   end
 
   defp register_user, do: fixture(:user)
