@@ -17,12 +17,19 @@ defmodule ConduitWeb.SessionControllerTest do
             password: "jakejake"
           }
 
-      assert json_response(conn, 201)["user"] == %{
+      json = json_response(conn, 201)["user"]
+      token = json["token"]
+
+      assert json == %{
                "bio" => nil,
                "email" => "jake@jake.jake",
+               "token" => token,
                "image" => nil,
                "username" => "jake"
              }
+
+      # 否定断言，期望表达式为false或者nil
+      refute token == ""
     end
 
     @tag :web
