@@ -3,13 +3,20 @@ defmodule ConduitWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
-    # plug Guardian.Plug.VerifyHeader, realm: "Token"
-    # plug Guardian.Plug.LoadResource
+
+    plug Guardian.Plug.VerifyHeader,
+      module: Conduit.Auth.GuardianSerializer,
+      error_handler: ConduitWeb.ErrorHandler,
+      claims: %{"typ" => "access"}
+
+    plug Guardian.Plug.LoadResource,
+      module: Conduit.Auth.GuardianSerializer,
+      error_handler: ConduitWeb.ErrorHandler,
+      allow_blank: true
   end
 
   scope "/api", ConduitWeb do
     pipe_through :api
-
     post "/users/login", SessionController, :create
     post "/users", UserController, :create
   end
