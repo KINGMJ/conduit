@@ -10,10 +10,11 @@ defmodule ConduitWeb.UserController do
     # 将字符串参数转换为atom
     user_params = Map.new(user_params, fn {k, v} -> {String.to_atom(k), v} end)
 
-    with {:ok, %User{} = user} <- Accounts.register_user(user_params) do
+    with {:ok, %User{} = user} <- Accounts.register_user(user_params),
+         {:ok, jwt} = generate_jwt(user) do
       conn
       |> put_status(:created)
-      |> render("show.json", user: user)
+      |> render("show.json", user: user, jwt: jwt)
     end
   end
 end
