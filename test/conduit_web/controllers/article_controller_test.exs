@@ -2,7 +2,7 @@ defmodule ConduitWeb.ArticleControllerTest do
   use ConduitWeb.ConnCase
 
   alias Conduit.Blog
-  alias Conduit.Blog.Article
+  alias Conduit.Blog.Projections.Article
 
   @create_attrs %{
     author_bio: "some author_bio",
@@ -30,7 +30,19 @@ defmodule ConduitWeb.ArticleControllerTest do
     tag_list: [],
     title: "some updated title"
   }
-  @invalid_attrs %{author_bio: nil, author_image: nil, author_username: nil, author_uuid: nil, body: nil, description: nil, favorite_count: nil, published_at: nil, slug: nil, tag_list: nil, title: nil}
+  @invalid_attrs %{
+    author_bio: nil,
+    author_image: nil,
+    author_username: nil,
+    author_uuid: nil,
+    body: nil,
+    description: nil,
+    favorite_count: nil,
+    published_at: nil,
+    slug: nil,
+    tag_list: nil,
+    title: nil
+  }
 
   def fixture(:article) do
     {:ok, article} = Blog.create_article(@create_attrs)

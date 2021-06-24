@@ -6,7 +6,7 @@ defmodule Conduit.Blog do
   import Ecto.Query, warn: false
   alias Conduit.Repo
 
-  alias Conduit.Blog.Article
+  alias Conduit.Blog.Projections.Article
 
   @doc """
   Returns the list of articles.
