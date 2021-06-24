@@ -5,18 +5,19 @@ defmodule ConduitWeb.Router do
     plug :accepts, ["json"]
 
     plug Guardian.Plug.VerifyHeader,
-      module: Conduit.Auth.GuardianSerializer,
+      module: Conduit.Auth.Guardian,
       error_handler: ConduitWeb.ErrorHandler,
       claims: %{"typ" => "access"}
 
     plug Guardian.Plug.LoadResource,
-      module: Conduit.Auth.GuardianSerializer,
+      module: Conduit.Auth.Guardian,
       error_handler: ConduitWeb.ErrorHandler,
       allow_blank: true
   end
 
   scope "/api", ConduitWeb do
     pipe_through :api
+    get "/user", UserController, :current
     post "/users/login", SessionController, :create
     post "/users", UserController, :create
   end

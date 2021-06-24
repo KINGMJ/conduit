@@ -1,5 +1,6 @@
 defmodule ConduitWeb.UserControllerTest do
   use ConduitWeb.ConnCase
+  import ConduitWeb.JWT
 
   setup %{conn: conn} do
     {:ok, conn: put_req_header(conn, "accept", "application/json")}
@@ -48,6 +49,34 @@ defmodule ConduitWeb.UserControllerTest do
                  "has already been taken"
                ]
              }
+    end
+  end
+
+  describe "get current user" do
+    @tag :web
+    test "should return user when authenticated", %{conn: conn} do
+      conn = get(authenticated_conn(conn), Routes.user_path(conn, :current))
+
+      json = json_response(conn, 200)["user"]
+      token = json["token"]
+
+      assert json == %{
+               "bio" => nil,
+               "email" => "jake@jake.jake",
+               "token" => token,
+               "image" => nil,
+               "username" => "jake"
+             }
+
+      refute token == ""
+    end
+  end
+
+  def authenticated_conn(conn) do
+    with {:ok, user} <- fixture(:user),
+         {:ok, jwt} <- generate_jwt(user) do
+      conn
+      |> put_req_header("authorization", "Bearer " <> jwt)
     end
   end
 end

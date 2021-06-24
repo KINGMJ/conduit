@@ -1,4 +1,4 @@
-defmodule Conduit.Auth.GuardianSerializer do
+defmodule Conduit.Auth.Guardian do
   @moduledoc """
   Used by Guardian to serializer a JWT token
   """

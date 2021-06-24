@@ -3,6 +3,7 @@ defmodule ConduitWeb.UserController do
 
   alias Conduit.Accounts
   alias Conduit.Accounts.Projections.User
+  alias Conduit.Auth.Guardian
 
   action_fallback ConduitWeb.FallbackController
 
@@ -16,5 +17,14 @@ defmodule ConduitWeb.UserController do
       |> put_status(:created)
       |> render("show.json", user: user, jwt: jwt)
     end
+  end
+
+  def current(conn, _params) do
+    user = Guardian.Plug.current_resource(conn)
+    jwt = Guardian.Plug.current_token(conn)
+
+    conn
+    |> put_status(:ok)
+    |> render("show.json", user: user, jwt: jwt)
   end
 end

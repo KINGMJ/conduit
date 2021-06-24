@@ -27,7 +27,7 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
-config :conduit, Conduit.Auth.GuardianSerializer,
+config :conduit, Conduit.Auth.Guardian,
   issuer: "conduit",
   secret_key: "WmdGyq0k6pxoEbZiknSKHIiHVm4EDHjRO5aGCOTRbf7nr7b6AgUJa697TxFdtqcn"
 
