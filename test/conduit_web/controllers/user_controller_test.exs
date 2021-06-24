@@ -70,6 +70,12 @@ defmodule ConduitWeb.UserControllerTest do
 
       refute token == ""
     end
+
+    @tag :web
+    test "should not return user when unauthenticated", %{conn: conn} do
+      conn = get(conn, Routes.user_path(conn, :current))
+      assert response(conn, 401) == "unauthenticated"
+    end
   end
 
   def authenticated_conn(conn) do
