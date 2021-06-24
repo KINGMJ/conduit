@@ -15,11 +15,22 @@ defmodule ConduitWeb.Router do
       allow_blank: true
   end
 
+  # 验证token
+  pipeline :ensure_auth do
+    plug Guardian.Plug.EnsureAuthenticated,
+      module: Conduit.Auth.Guardian,
+      error_handler: ConduitWeb.ErrorHandler,
+      claims: %{"typ" => "access"}
+  end
+
   scope "/api", ConduitWeb do
     pipe_through :api
-    get "/user", UserController, :current
     post "/users/login", SessionController, :create
     post "/users", UserController, :create
+
+    # 对于下面这些路由，都需要验证token
+    pipe_through :ensure_auth
+    get "/user", UserController, :current
   end
 
   # Enables LiveDashboard only for development
