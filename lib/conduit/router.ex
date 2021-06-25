@@ -3,9 +3,15 @@ defmodule Conduit.Router do
 
   alias Conduit.Accounts.Aggregates.User
   alias Conduit.Accounts.Commands.RegisterUser
+  alias Conduit.Blog.Aggregates.Author
+  alias Conduit.Blog.Commands.CreateAuthor
   alias Conduit.Support.Middleware.Uniqueness
 
   middleware(Uniqueness)
 
-  dispatch([RegisterUser], to: User, identity: :user_uuid)
+  identify(Author, by: :author_uuid, prefix: "author-")
+  identify(User, by: :user_uuid, prefix: "user-")
+
+  dispatch([CreateAuthor], to: Author)
+  dispatch([RegisterUser], to: User)
 end
