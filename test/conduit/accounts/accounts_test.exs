@@ -55,7 +55,6 @@ defmodule Conduit.AccountsTest do
     @tag :integration
     test "should fail when email address format is invalid and return error" do
       assert {:error, errors} = Accounts.register_user(build(:user, email: "invalidemail"))
-      IO.inspect(errors_on(errors))
       assert "is invalid" in errors_on(errors).email
     end
 
