@@ -13,6 +13,8 @@ defmodule Conduit.Application do
       Conduit.CommandedApp,
       # Accounts supervisor
       Conduit.Accounts.Supervisor,
+      # Blog supervisor
+      Conduit.Blog.Supervisor,
       # Start the Telemetry supervisor
       ConduitWeb.Telemetry,
       # Start the PubSub system
