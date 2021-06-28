@@ -1,6 +1,6 @@
 defmodule ConduitWeb.UserControllerTest do
   use ConduitWeb.ConnCase
-  import ConduitWeb.JWT
+
 
   setup %{conn: conn} do
     {:ok, conn: put_req_header(conn, "accept", "application/json")}
@@ -78,11 +78,5 @@ defmodule ConduitWeb.UserControllerTest do
     end
   end
 
-  def authenticated_conn(conn) do
-    with {:ok, user} <- fixture(:user),
-         {:ok, jwt} <- generate_jwt(user) do
-      conn
-      |> put_req_header("authorization", "Bearer " <> jwt)
-    end
-  end
+
 end
