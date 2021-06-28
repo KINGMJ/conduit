@@ -1,4 +1,4 @@
-defmodule Conduit.Blog.Author do
+defmodule Conduit.Blog.Projections.Author do
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -7,7 +7,7 @@ defmodule Conduit.Blog.Author do
   schema "blog_authors" do
     field :bio, :string
     field :image, :string
-    field :user_uuid, Ecto.UUID
+    field :user_uuid, :binary_id
     field :username, :string
 
     timestamps()
