@@ -52,7 +52,8 @@ defmodule Conduit.MixProject do
       {:commanded_ecto_projections, "~> 1.2"},
       {:commanded_messaging, "~> 0.2.0"},
       {:bcrypt_elixir, "~> 2.3"},
-      {:guardian, "~> 2.1"}
+      {:guardian, "~> 2.1"},
+      {:slugger, "~> 0.3.0"}
     ]
   end
 
