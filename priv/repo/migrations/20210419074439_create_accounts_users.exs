@@ -13,7 +13,6 @@ defmodule Conduit.Repo.Migrations.CreateAccountsUsers do
       timestamps()
     end
 
-    create unique_index(:accounts_users, [:username])
-    create unique_index(:accounts_users, [:email])
+    create unique_index(:accounts_users, [:username,:email])
   end
 end
