@@ -18,8 +18,6 @@ defmodule Conduit.Accounts.Projections.User do
     user
     |> cast(params, [:uuid, :email, :username, :bio, :hashed_password, :image])
     |> validate_required([:uuid, :email, :username])
-    |> unique_constraint(:email, name: :accounts_users_email_index)
-    |> unique_constraint(:username, name: :accounts_users_username_index)
     |> unique_constraint([:email, :username])
   end
 
