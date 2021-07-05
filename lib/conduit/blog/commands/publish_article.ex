@@ -40,9 +40,7 @@ defmodule Conduit.Blog.Commands.PublishArticle do
   Generate a unique URL slug from the article title
   """
   def generate_url_slug(%{title: title} = attrs) do
-    case Slugger.slugify(title) do
-      {:ok, slug} -> Map.put(attrs, :slug, slug)
-      _ -> attrs
-    end
+    {:ok, slug} = Slugger.slugify(title)
+    Map.put(attrs, :slug, slug)
   end
 end
