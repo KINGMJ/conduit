@@ -8,6 +8,12 @@ defmodule Conduit.BlogTest do
     setup [:create_author]
 
     @tag :integration
+    test "should fail with invalid data and return error", %{author: author} do
+      assert {:error, errors} = Blog.publish_article(author, build(:article, tag_list: %{}))
+      assert "is invalid" in errors_on(errors).tag_list
+    end
+
+    @tag :integration
     test "should succeed with valid data", %{author: author} do
       assert {:ok, %Article{} = article} = Blog.publish_article(author, build(:article))
       assert article.slug == "how-to-train-your-dragon"

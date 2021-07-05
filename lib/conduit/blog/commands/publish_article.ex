@@ -22,6 +22,7 @@ defmodule Conduit.Blog.Commands.PublishArticle do
       :body,
       :tag_list
     ])
+    |> validate_format(:slug, ~r/^[a-z0-9\-]+$/, message: "is invalid")
   end
 
   @doc """
