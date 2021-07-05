@@ -41,7 +41,7 @@ defmodule Conduit.Blog.Commands.PublishArticle do
   """
   def generate_url_slug(%{title: title} = attrs) do
     case Slugger.slugify(title) do
-      {:ok, slug} -> %{attrs | slug: slug}
+      {:ok, slug} -> Map.put(attrs, :slug, slug)
       _ -> attrs
     end
   end
