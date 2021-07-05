@@ -9,6 +9,7 @@ defmodule Conduit.Blog do
   alias Conduit.Blog.Projections.Article
   alias Conduit.Blog.Projections.Author
   alias Conduit.Blog.Commands.CreateAuthor
+  alias Conduit.Blog.Commands.PublishArticle
   alias Conduit.CommandedApp
 
   @doc """
@@ -28,6 +29,33 @@ defmodule Conduit.Blog do
 
       with :ok <- CommandedApp.dispatch(cmd, consistency: :strong) do
         get(Author, uuid)
+      else
+        reply -> reply
+      end
+    end
+  end
+
+  @doc """
+  Publishes an article by the given author.
+  """
+  def publish_article(%Author{} = author, attrs \\ %{}) do
+    uuid = UUID.uuid4()
+
+    publish_article =
+      attrs
+      |> PublishArticle.assign_uuid(uuid)
+      |> PublishArticle.assign_author(author)
+      |> PublishArticle.generate_url_slug()
+      |> PublishArticle.new()
+
+    unless publish_article.valid? do
+      {:error, publish_article}
+    else
+      cmd = Ecto.Changeset.apply_changes(publish_article)
+      IO.inspect(cmd)
+
+      with :ok <- CommandedApp.dispatch(cmd, consistency: :strong) do
+        get(Article, uuid)
       else
         reply -> reply
       end
