@@ -8,6 +8,7 @@ defmodule Conduit.Blog.Supervisor do
   def init(_arg) do
     children = [
       Conduit.Blog.Projectors.Author,
+      Conduit.Blog.Projectors.Article,
       Conduit.Blog.Workflows.CreateAuthorFromUser
     ]
 
