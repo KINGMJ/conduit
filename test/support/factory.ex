@@ -15,7 +15,6 @@ defmodule Conduit.Factory do
 
   def article_factory do
     %{
-      slug: "how-to-train-your-dragon",
       title: "How to train your dragon",
       description: "Ever wonder how?",
       body: "You have to believe",

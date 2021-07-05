@@ -11,6 +11,7 @@ defmodule Conduit.Blog do
   alias Conduit.Blog.Commands.CreateAuthor
   alias Conduit.Blog.Commands.PublishArticle
   alias Conduit.CommandedApp
+  alias Conduit.Blog.Queries.ArticleBySlug
 
   @doc """
   create an author.
@@ -52,7 +53,6 @@ defmodule Conduit.Blog do
       {:error, publish_article}
     else
       cmd = Ecto.Changeset.apply_changes(publish_article)
-      IO.inspect(cmd)
 
       with :ok <- CommandedApp.dispatch(cmd, consistency: :strong) do
         get(Article, uuid)
@@ -60,6 +60,13 @@ defmodule Conduit.Blog do
         reply -> reply
       end
     end
+  end
+
+  def article_by_slug(slug) do
+    slug
+    |> String.downcase()
+    |> ArticleBySlug.new()
+    |> Repo.one()
   end
 
   defp get(schema, uuid) do
