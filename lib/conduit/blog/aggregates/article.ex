@@ -11,18 +11,23 @@ defmodule Conduit.Blog.Aggregates.Article do
 
   alias Conduit.Blog.Commands.PublishArticle
   alias Conduit.Blog.Events.ArticlePublished
+  alias Conduit.Blog.Validators.UniqueArticleSlug
   alias __MODULE__
 
   def execute(%Article{uuid: nil}, %PublishArticle{} = publish) do
-    %ArticlePublished{
-      article_uuid: publish.article_uuid,
-      slug: publish.slug,
-      title: publish.title,
-      description: publish.description,
-      body: publish.body,
-      tag_list: publish.tag_list,
-      author_uuid: publish.author_uuid
-    }
+    with :ok <- UniqueArticleSlug.validate(publish.slug) do
+      %ArticlePublished{
+        article_uuid: publish.article_uuid,
+        slug: publish.slug,
+        title: publish.title,
+        description: publish.description,
+        body: publish.body,
+        tag_list: publish.tag_list,
+        author_uuid: publish.author_uuid
+      }
+    else
+      reply -> reply
+    end
   end
 
   def apply(%Article{} = article, %ArticlePublished{} = published) do
