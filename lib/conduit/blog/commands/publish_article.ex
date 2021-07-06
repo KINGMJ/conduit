@@ -10,6 +10,7 @@ defmodule Conduit.Blog.Commands.PublishArticle do
 
   alias Conduit.Blog.Projections.Author
   alias Conduit.Blog.Slugger
+  alias Conduit.Support.Middleware.Uniqueness.UniqueFields
 
   def handle_validate(changeset) do
     changeset
@@ -43,5 +44,13 @@ defmodule Conduit.Blog.Commands.PublishArticle do
   def generate_url_slug(%{title: title} = attrs) do
     {:ok, slug} = Slugger.slugify(title)
     Map.put(attrs, :slug, slug)
+  end
+
+  # 为该模块提供 UniqueFields protocal 的实现
+  defimpl UniqueFields, for: __MODULE__ do
+    def unique(_command),
+      do: [
+        {:slug, "has already been taken"}
+      ]
   end
 end
