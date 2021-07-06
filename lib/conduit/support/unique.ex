@@ -1,7 +1,7 @@
 defmodule Conduit.Support.Unique do
   use GenServer
-  
-  def start_link(init_arg \\ []) do
+
+  def start_link(_init_arg \\ []) do
     GenServer.start_link(__MODULE__, %{}, name: __MODULE__)
   end
 
