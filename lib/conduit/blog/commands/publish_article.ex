@@ -35,7 +35,7 @@ defmodule Conduit.Blog.Commands.PublishArticle do
   Assign the author
   """
   def assign_author(attrs, %Author{uuid: uuid}) do
-    %{attrs | author_uuid: uuid}
+    Map.put(attrs, :author_uuid, uuid)
   end
 
   @doc """

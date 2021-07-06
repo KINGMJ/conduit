@@ -62,11 +62,21 @@ defmodule Conduit.Blog do
     end
   end
 
+  @doc """
+  Get an article by its URL slug, or return `nil` if not found.
+  """
   def article_by_slug(slug) do
     slug
     |> String.downcase()
     |> ArticleBySlug.new()
     |> Repo.one()
+  end
+
+  @doc """
+  Get the author for a given uuid.
+  """
+  def get_author!(uuid) do
+    Repo.get!(Author, uuid)
   end
 
   defp get(schema, uuid) do

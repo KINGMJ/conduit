@@ -31,6 +31,7 @@ defmodule ConduitWeb.Router do
     # 对于下面这些路由，都需要验证token
     pipe_through :ensure_auth
     get "/user", UserController, :current
+    post "/articles", ArticleController, :create
   end
 
   # Enables LiveDashboard only for development
