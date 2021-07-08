@@ -27,6 +27,7 @@ defmodule ConduitWeb.Router do
     pipe_through :api
     post "/users/login", SessionController, :create
     post "/users", UserController, :create
+    get "/articles", ArticleController, :index
 
     # 对于下面这些路由，都需要验证token
     pipe_through :ensure_auth

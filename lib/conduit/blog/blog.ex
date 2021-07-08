@@ -11,7 +11,7 @@ defmodule Conduit.Blog do
   alias Conduit.Blog.Commands.CreateAuthor
   alias Conduit.Blog.Commands.PublishArticle
   alias Conduit.CommandedApp
-  alias Conduit.Blog.Queries.ArticleBySlug
+  alias Conduit.Blog.Queries.{ArticleBySlug, ListArticles}
 
   @doc """
   create an author.
@@ -77,6 +77,10 @@ defmodule Conduit.Blog do
   """
   def get_author!(uuid) do
     Repo.get!(Author, uuid)
+  end
+
+  def list_articles(params \\ %{}) do
+    ListArticles.paginate(params, Repo)
   end
 
   defp get(schema, uuid) do
